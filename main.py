@@ -1,5 +1,6 @@
 #!/usr/bin/python
 from room import Room
+import Game
 
 class Main:
 
@@ -39,7 +40,8 @@ class Main:
         rooms.append(kitchen)
 
         #initialize game
-        game(rooms)
+        startGame = Game(rooms)
+        startGame.game()
 
 
 
