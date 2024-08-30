@@ -1,67 +1,94 @@
+import room
+
 class Game:
 
-    def __init__(self, rooms: List[Room]):
+    def __init__(self, rooms): #rooms is a list of Room objects
         self.rooms = rooms
-        currentPosition = self.rooms[0] #is this going to be a problem given that I initilaized to None?
-        inventory = []
+        self.currentPosition = self.rooms[0] 
+        self.inventory = []
 
     #player actions
-    def move(direction: str):
+    def move(self, direction: str):
         match direction.lower():
             case "north" | "n":
-                currentPosition = currentPosition.neighbors[0]
+                if (not self.currentPosition.neighbors 
+                    or len(self.currentPosition.neighbors) < 4 
+                    or self.currentPosition.neighbors[0] == None):
+                    print("can go in that direction")
+                else:
+                    self.currentPosition = self.currentPosition.neighbors[0]
 
             case "east" | "e":
-                currentPosition = currentPosition.neighbors[1]
+                if (not self.currentPosition.neighbors 
+                    or len(self.currentPosition.neighbors) < 4 
+                    or self.currentPosition.neighbors[1] == None):
+                    print("can go in that direction")
+                else:
+                    self.currentPosition = self.currentPosition.neighbors[1]
 
             case "south" | "s":
-                currentPosition = currentPosition.neighbors[2]
+                if (not self.currentPosition.neighbors 
+                    or len(self.currentPosition.neighbors) < 4 
+                    or self.currentPosition.neighbors[2] == None):
+                    print("can go in that direction")
+                else:
+                    self.currentPosition = self.currentPosition.neighbors[2]
 
             case "west" | "w":
-                currentPosition = currentPosition.neighbors[3]
+                if (not self.currentPosition.neighbors 
+                    or len(self.currentPosition.neighbors) < 4 
+                    or self.currentPosition.neighbors[3] == None):
+                    print("can go in that direction")
+                else:
+                    self.currentPosition = self.currentPosition.neighbors[3]
 
             case _:
                 print("didn't understand that")
 
-    def look():
-        print(currentPosition.description)
+    def look(self):
+        print(self.currentPosition.description)
 
-    def take(item):
-        inventory.append(item)
+    def take(self, item):
+        self.inventory.append(item)
 
-    def examine(item):
-        print(currentPosition.items[item])
+    def examine(self, item):
+        print(self.currentPosition.items[item])
 
-    def getUserInput() -> str:
+    def getUserInput(self) -> str:
         return input("> ")
 
-    def inventory():
-        print(inventory)
+    def getInventory(self):
+        print(*self.inventory, sep=", ")
 
     #main function containing all game play
-    def game():
+    def game(self):
         print("opening description")
-        userInput = getuserInput().split(" ")
+        #userInput = self.getUserInput().split(" ")
         
-        while:
+        while True:
+            userInput = self.getUserInput().split(" ")
             match userInput[0].lower():
                 case "quit" | "q":
                     break
                 case "look" | "l":
-                    look()
+                    self.look()
                 case "take" | "t":
-                    if userInput[1] in currentPosition and userInput[1] not in inventory:
-                        take(userInput[1])
+                    if not len(userInput) == 2:
+                        print("which item were you asking about?")
+                    elif userInput[1] in self.currentPosition.items and userInput[1] not in self.inventory:
+                        self.take(userInput[1])
                     else:
                         print("that item isn't available")
                 case "examine" | "x":
-                    if userInput[1] in currentPosition:
-                        examine(userInput[1])
+                    if not len(userInput) == 2:
+                        print("which item were you asking about?")
+                    elif userInput[1] in self.currentPosition.items:
+                        self.examine(userInput[1])
                     else:
                         print("that item isn't available")
                 case "north" | "n" | "east" | "e" | "south" | "s" | "west" | "w":
-                    move(userInput[0])
+                    self.move(userInput[0])
                 case "inventory" | "i":
-                    inventory()
+                    self.getInventory()
                 case _:
                     print("didn't understand that")

@@ -1,6 +1,6 @@
 #!/usr/bin/python
 from room import Room
-import Game
+from game import Game
 
 class Main:
 
