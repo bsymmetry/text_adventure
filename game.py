@@ -11,34 +11,26 @@ class Game:
     def move(self, direction: str):
         match direction.lower():
             case "north" | "n":
-                if (not self.currentPosition.neighbors 
-                    or len(self.currentPosition.neighbors) < 4 
-                    or self.currentPosition.neighbors[0] == None):
-                    print("can go in that direction")
+                if self.currentPosition.neighbors[0]:
+                    print("can't go in that direction")
                 else:
                     self.currentPosition = self.currentPosition.neighbors[0]
 
             case "east" | "e":
-                if (not self.currentPosition.neighbors 
-                    or len(self.currentPosition.neighbors) < 4 
-                    or self.currentPosition.neighbors[1] == None):
-                    print("can go in that direction")
+                if self.currentPosition.neighbors[1]:
+                    print("can't go in that direction")
                 else:
                     self.currentPosition = self.currentPosition.neighbors[1]
 
             case "south" | "s":
-                if (not self.currentPosition.neighbors 
-                    or len(self.currentPosition.neighbors) < 4 
-                    or self.currentPosition.neighbors[2] == None):
-                    print("can go in that direction")
+                if self.currentPosition.neighbors[2]:
+                    print("can't go in that direction")
                 else:
                     self.currentPosition = self.currentPosition.neighbors[2]
 
             case "west" | "w":
-                if (not self.currentPosition.neighbors 
-                    or len(self.currentPosition.neighbors) < 4 
-                    or self.currentPosition.neighbors[3] == None):
-                    print("can go in that direction")
+                if self.currentPosition.neighbors[3]: 
+                    print("can't go in that direction")
                 else:
                     self.currentPosition = self.currentPosition.neighbors[3]
 

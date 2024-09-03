@@ -6,39 +6,42 @@ class Main:
 
     def main():
        
+        #get rooms to create
+        roomNames = []
         rooms = []
-
+        with open('roomsList.txt', encoding="utf-8") as f:
+            line = f.readline()
+            while line:
+                roomNames.append(line.rstrip())
+                line = f.readline()
         #create rooms
-        items = {}
-        neighbors = []
-        description = "description of living room"
-        livingRoom = Room("livingRoom", items, neighbors, description)
-        rooms.append(livingRoom)
+        for r in roomNames:
+            items = {}
+            with open(r + 'Items.txt', encoding="utf-8") as f:
+                line = f.readline()
+                while line:
+                    parts = line.split(": ")
+                    items[parts[0]] = parts[1]
+                    line = f.readline()
+        
+            neighbors = []
+            with open(r + 'Neighbors.txt', encoding="utf-8") as f:
+                line = f.readline()
+                while line:
+                    if line == "None":
+                        neighbors.append(None)
+                    else:
+                        neighbors.append(line)
+                    line = f.readline()
+                while len(neighbors) < 4:
+                    neighbors.append(None)
+        
+            with open(r + 'Desc.txt', encoding="utf-8") as f:
+                description = f.read() 
+            room = Room(r, items, neighbors, description)
+            rooms.append(room)
+            print(*room.neighbors)
        
-        items = {}
-        neighbors = []
-        description = "description of bedroom"
-        bedroom = Room("livingRoom", items, neighbors, description)
-        rooms.append(bedroom)
-
-        items = {}
-        neighbors = []
-        description = "description of family room"
-        familyRoom = Room("livingRoom", items, neighbors, description)
-        rooms.append(familyRoom)
-
-        items = {}
-        neighbors = []
-        description = "description of hall"
-        hall = Room("livingRoom", items, neighbors, description)
-        rooms.append(hall)
-
-        items = {}
-        neighbors = []
-        description = "description of kitchen"
-        kitchen = Room("livingRoom", items, neighbors, description)
-        rooms.append(kitchen)
-
         #initialize game
         startGame = Game(rooms)
         startGame.game()
