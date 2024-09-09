@@ -1,0 +1,4 @@
+hall
+kitchen
+None
+None
