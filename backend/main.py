@@ -16,12 +16,13 @@ class Main:
                 line = f.readline()
         #create rooms
         for r in roomNames:
-            items = {}
+            items = []
             with open('~/story_files/' + r + 'Items.txt', encoding="utf-8") as f:
                 line = f.readline()
                 while line:
                     parts = line.split(": ")
-                    items[parts[0]] = parts[1]
+                    newItem = Item(parts[0], parts[1], parts[2], parts[3]) 
+                    items.append(newItem)
                     line = f.readline()
         
             neighbors = []
